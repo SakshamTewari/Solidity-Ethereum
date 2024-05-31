@@ -6,7 +6,7 @@ contract Ownable {
 
     address owner;
 
-    constructor() public{
+    constructor(){
         owner = msg.sender;
     }
 
@@ -21,7 +21,7 @@ contract MyContract is Ownable {
 
     string secret;
 
-    constructor(string memory _secret) public {
+    constructor(string memory _secret){
         secret = _secret;
         super;  //call the constructor of parent contract;
     }
@@ -39,7 +39,7 @@ contract MyContract is Ownable {
 contract SecretVault {
 
     string secret;
-    constructor(string memory _secret) public {
+    constructor(string memory _secret){
         secret = _secret;
     }
     function getSecret() public view returns (string memory){
@@ -52,7 +52,7 @@ contract MyContract2 is Ownable {
 
     address secretVault;        //address of SecretVault contract as it will be used to use its functions
 
-    constructor(string memory _secret) public {
+    constructor(string memory _secret){
         SecretVault _secretVault = new SecretVault(_secret);
         secretVault = address(_secretVault);       //storing address of the 'new' SecretVault contract
         super;  //call the constructor of parent contract (Ownable);

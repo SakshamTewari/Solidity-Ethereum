@@ -1,0 +1,35 @@
+# Node.js dependencies
+node_modules/
+
+# Truffle build directory
+build/
+
+# Truffle console history
+.history
+
+# Environment variables
+.env
+
+# Compiled contract artifacts
+*.json
+
+# Coverage reports
+coverage/
+coverage.json
+lcov-report/
+
+# Ethereum secret files
+.keyfile
+*.key
+
+# Miscellaneous
+*.log
+*.pid
+*.seed
+*.coveragerc
+
+# MacOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db

@@ -656,7 +656,12 @@ contract TestContract {
 (20) Interface 
 
         - it helps to call functions of another contract even if we don't have access to the code
-
+        - interface cannot have any function with implementation
+        - cannot have constructor
+        - cannot have state variables
+        - functions of an interface can be only of type external
+        - similar to abstract contracts
+        - by default virtual
 */
 
     // in this example, we already know that some contract 'Coounter' is already deployed
@@ -673,6 +678,14 @@ contract CallInterface {
     function examples(address _counter) external {
         ICounter(_counter).inc();
         count = ICounter(_counter).count();
+    }
+}
+
+// Or, if there is an inherited contract from ICounter
+
+contract main is ICounter {
+    function count() public pure override returns(uint){  // need to use override
+        return 2;
     }
 }
 

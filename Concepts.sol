@@ -945,3 +945,32 @@ contract main is base {
         return 1;
     }
 }
+
+
+/*
+(30) Storage v/s Memory
+*/
+
+contract Numbers {
+    int[] public numbers;  //stored in storage
+
+    function Numbers() public {
+        numbers.push(20);
+        numbers.push(32);
+
+        int[] storage myArray = numbers;  // this will point to same array 'numbers'
+        //so if we change any value in myArray, it will change in numbers
+        myArray[0] = 1;   // numbers[0] = 1
+
+        int[] memory yourArray = numbers; // makes a copy of 'numbers' and store it in memory
+        yourArray[0] = 1  // numbers[0] = 20
+
+        changeArray(numbers);
+
+    }
+
+    function changeArray(int[] storage newArray) private {
+        newArray[0] = 10;   //numbers[0] = 10  as we are passing direct reference of numbers from storage
+        //but if we use int[] memory newArray , then it is just passing a copy of numbers in arguement
+    }
+}

@@ -18,6 +18,13 @@ contract VendingMachine {
 
     function restock(uint amount) public {
         require(msg.sender == owner, "Only owner can restock this machine");
-        donutBalances[address(this)] + amount;
+        donutBalances[address(this)] += amount;
+    }
+
+    function purchase(uint amount) public payable {
+        require(msg.value >= amount * 2 ether, "You must pay at least 2 ether per donut");
+        require(donutBalances[address(this)] >= amount, "Not enough donuts available");
+        donutBalances[address(this)] -= amount;
+        donutBalances[msg.sender] += amount;
     }
 }

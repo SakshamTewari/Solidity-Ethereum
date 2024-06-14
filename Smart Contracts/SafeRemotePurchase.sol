@@ -19,7 +19,17 @@ contract PurchaseAgreement {
         seller = payable(msg.sender);
     }
 
-    function confirmPurchase() external payable {
+    /// The function cannot be called at the current state.
+    error InvalidState();
+
+    modifier inState(State _state){
+        if(state != _state) {
+            revert InvalidState();
+        }
+        _;
+    }
+
+    function confirmPurchase() external inState(State.Created) payable {
         require(msg.value == 2 * value, "Please send in 2x the purchase amount");
         buyer = payable(msg.sender);
         state = State.Locked; 

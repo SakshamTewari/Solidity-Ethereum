@@ -21,6 +21,8 @@ contract PurchaseAgreement {
 
     /// The function cannot be called at the current state.
     error InvalidState();
+    /// Only the buyer can call the function
+    error OnlyBuyer();
 
     modifier inState(State _state){
         if(state != _state) {
@@ -29,9 +31,21 @@ contract PurchaseAgreement {
         _;
     }
 
+    modifier onlyBuyer(){
+        if(msg.sender != buyer) {
+            revert OnlyBuyer();
+        }
+        _;
+    }
+
     function confirmPurchase() external inState(State.Created) payable {
         require(msg.value == 2 * value, "Please send in 2x the purchase amount");
         buyer = payable(msg.sender);
         state = State.Locked; 
+    }
+
+    function confirmReceived() external onlyBuyer inState(State.Locked){
+        state = State.Release;
+        buyer.transfer(value);
     }
  }

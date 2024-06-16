@@ -951,6 +951,9 @@ contract main is base {
 (30) Storage v/s Memory v/s Calldata
 
         - Calldata and memory are quite similar except if we want to change the value of parameter, then we use calldata
+        - Calldata = temporary variables (can be modified)
+        - Memory = temporary variables (can't be modified)
+        - Storage = permanent variables (can be modified)
 */
 
 contract Numbers {

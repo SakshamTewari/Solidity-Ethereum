@@ -948,7 +948,9 @@ contract main is base {
 
 
 /*
-(30) Storage v/s Memory
+(30) Storage v/s Memory v/s Calldata
+
+        - Calldata and memory are quite similar except if we want to change the value of parameter, then we use calldata
 */
 
 contract Numbers {
@@ -972,5 +974,12 @@ contract Numbers {
     function changeArray(int[] storage newArray) private {
         newArray[0] = 10;   //numbers[0] = 10  as we are passing direct reference of numbers from storage
         //but if we use int[] memory newArray , then it is just passing a copy of numbers in arguement
+    }
+
+    //example of calldata
+
+    function addPerson(string calldata _name, uint _number) public {
+        _name = "cat";      // we are changing the value of what was given in the arguements
+        people.push(People(_name, _number));   
     }
 }

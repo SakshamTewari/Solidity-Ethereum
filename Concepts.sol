@@ -1022,3 +1022,14 @@ contract Numbers {
         // (bool callSuccess, bytes memory dataReturned) = payable(msg.sender).call{value: address(this).balance}("");
         (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Failed");
+
+
+/*
+(33) Custom Errors
+
+    - error NotOwner();  
+    - if (msg.sender != owner){
+        
+            revert NotOwner();
+        }
+*/  

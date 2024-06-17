@@ -986,3 +986,11 @@ contract Numbers {
         people.push(People(_name, _number));   
     }
 }
+
+
+/*
+(31) Reset the Array
+
+    -  address[] public funders;    =>   funders = new address[][0]     0 here denotes the number of element
+
+*/

@@ -1009,6 +1009,7 @@ contract Numbers {
               :
                 used to call another function while transferring eth
                 returns bool , data
+                need an extra 'require' statement to revert
 */
     // transfer
         payable(msg.sender).transfer(address(this).balance);
@@ -1018,4 +1019,6 @@ contract Numbers {
         require(sendSuccess, "Failed");
     
     // call
-        (bool callSuccess, bytes dataReturned) = payable(msg.sender).call{value: address(this).balance}("");
+        // (bool callSuccess, bytes memory dataReturned) = payable(msg.sender).call{value: address(this).balance}("");
+        (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
+        require(callSuccess, "Failed");

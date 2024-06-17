@@ -504,6 +504,11 @@ contract Payable {
     - difference b/w fallback() and receive()
         - if msg.data ( or the ether that is sent to this contract) is not empty , fallback is executed
         - if msg.data is empty and receive() is present, then receive is executed , otherwise fallback will be executed
+
+    Example: 
+        If someone wanted to use 'fund' function to transfer Eth but just sent 'Eth' via Transact
+        then contract will check if it has receive() or fallback() and whether some calldata was also sent
+        Both of these will redirect it to fund() [from the code below]. This is basically to bypass user's mistake in using functions correctly during transactions
 */
 
 contract Fallback {
@@ -512,10 +517,12 @@ contract Fallback {
 
     fallback() external payable {
         emit Log("fallback", msg.sender, msg.value, msg.data);
+        fund();
     }
 
     receive() external payable {
         emit Log("receive", msg.sender, msg.value, "");
+        fund();
     }
 }
 

@@ -994,3 +994,28 @@ contract Numbers {
     -  address[] public funders;    =>   funders = new address[][0]     0 here denotes the number of element
 
 */
+
+
+/*
+(32) Transfer v/s Send v/s Call   (all used to transfer eth from contracts)
+
+    Transfer  :
+                reverts automatically if failed
+    
+    Send      :
+                returns a bool
+                need an extra 'require' statement to revert.  
+    Call 
+              :
+                used to call another function while transferring eth
+                returns bool , data
+*/
+    // transfer
+        payable(msg.sender).transfer(address(this).balance);
+
+    // send
+        bool sendSuccess = payable(msg.sender).send(address(this).balance);
+        require(sendSuccess, "Failed");
+    
+    // call
+        (bool callSuccess, bytes dataReturned) = payable(msg.sender).call{value: address(this).balance}("");

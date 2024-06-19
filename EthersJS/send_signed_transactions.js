@@ -1,7 +1,7 @@
-const { ethers } = require('ethers');
+const { ethers, JsonRpcProvider } = require('ethers');
 
 const INFURA_ID = '5fb26bc82c484597a18dd9aba73bd52b';
-const provider = new ethers.providers.JsonRpcProvider(
+const provider = new JsonRpcProvider(
   `https://sepolia.infura.io/v3/${INFURA_ID}`,
 );
 
@@ -18,19 +18,16 @@ const main = async () => {
 
   //Show balance before transfer
   console.log(
-    `\nSender balance before: ${ethers.utils.formatEther(senderBalanceBefore)}`,
+    `\nSender balance before: ${ethers.formatEther(senderBalanceBefore)}`,
   );
   console.log(
-    `reciever balance before: ${ethers.utils.formatEther(
-      recieverBalanceBefore,
-    )}\n`,
+    `reciever balance before: ${ethers.formatEther(recieverBalanceBefore)}\n`,
   );
 
-  //we did not need to specify 'account1' here as it is obvious we are sending
-  // it from 'account1' as we have created 'wallet' from account1's private key
+  //we do not need to specify 'account1' here as we have created 'wallet' from account1's private key
   const tx = await wallet.sendTransaction({
     to: account2,
-    value: ethers.utils.parseEther('0.025'),
+    value: ethers.parseEther('0.025'),
   });
 
   //Wait for transaction to be mined in the blockchain
@@ -42,12 +39,10 @@ const main = async () => {
 
   //Show balance after transfer
   console.log(
-    `\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`,
+    `\nSender balance after: ${ethers.formatEther(senderBalanceAfter)}`,
   );
   console.log(
-    `reciever balance after: ${ethers.utils.formatEther(
-      recieverBalanceAfter,
-    )}\n`,
+    `reciever balance after: ${ethers.formatEther(recieverBalanceAfter)}\n`,
   );
 };
 

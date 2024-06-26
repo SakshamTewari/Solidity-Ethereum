@@ -1,3 +1,6 @@
+//Previous version had : const {createAlchemyWeb3} = require('@alch/alchemy-web3')
+// const web3 = createAlchemyWeb3(`wss://eth-rinkeby.ws.alchemyapi.io/ws/${alchemyApiKey}');
+
 // npm install @alchemy-sdk
 const { Network, Alchemy } = require('alchemy-sdk');
 

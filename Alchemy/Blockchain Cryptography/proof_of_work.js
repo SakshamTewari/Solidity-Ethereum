@@ -30,6 +30,17 @@ In Bitcoin, there is a specific block size limit that cannot be exceeded.
 The number of transactions that will fit inside of a block varies due to transactions being of all different sizes.
 
 
+Target-Difficulty
+-----------------
+
+In bitcoin, the difficulty is adjusted every 2016 blocks, which is about every two weeks with the blocks being mined on average every 10 minutes.
+At that point, the difficulty is adjusted to attempt to keep the mining intervals around that 10 minute per block mark.
+This is where we get the work part of proof of work!
+
+
+
+
+
 
 ==================================================================================================================================================
 
@@ -47,6 +58,13 @@ The number of transactions that will fit inside of a block varies due to transac
 (4) Inside the mine function, pull transactions off the mempool and include them in the block in an array called transactions
     Remove each transaction you include in the block from the mempool
     Add the transactions array to the block before hashing the block
+
+(5) In the mine function, prior to hashing the block, add a nonce property. This property should start at 0
+    Keep changing the nonce until you find a hash that is less than the TARGET_DIFFICULTY
+    You can compare a BigInt to another BigInt using the JavaScript comparison operators. You can convert from a hash to be a BigInt by:
+
+            const hash = SHA256("example");
+            const int = BigInt(`0x${hash}`);
 */
 
 // ==================================================================================================================================================
@@ -58,6 +76,7 @@ const MAX_TRANSACTIONS = 10;
 
 const mempool = [];
 const blocks = [];
+let nonce = 0;
 
 function addTransaction(transaction) {
   // TODO: add transaction to mempool
@@ -66,15 +85,25 @@ function addTransaction(transaction) {
 
 function mine() {
   // TODO: mine a block
+
   let transactions = [];
   while (transactions.length < MAX_TRANSACTIONS && mempool.length > 0) {
     transactions.push(mempool.pop());
   }
   const block = {
     id: blocks.length,
+    nonce,
     transactions,
   };
-  const hash = SHA256(JSON.stringify(block));
+  block.nonce = 0;
+  let hash;
+
+  while (true) {
+    hash = SHA256(JSON.stringify(block));
+    if (BigInt(`0x${hash.toString()}`) < TARGET_DIFFICULTY) break;
+    block.nonce++;
+  }
+
   blocks.push({ ...block, hash });
 }
 

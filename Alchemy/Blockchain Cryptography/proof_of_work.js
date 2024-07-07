@@ -20,8 +20,18 @@ Block Hash
 ----------
 
 Typically, all the information in the header of the block is hashed together to create a unique hash based on those properties.
-
 If anything changes in the header, it will affect the hash. Since each block also contains the hash of the block before it, it will affect every future block as well.
+
+
+Mine TX - Block Size 
+--------------------
+
+In Bitcoin, there is a specific block size limit that cannot be exceeded. 
+The number of transactions that will fit inside of a block varies due to transactions being of all different sizes.
+
+
+
+==================================================================================================================================================
 
 
 (1) Implement the addTransaction function, which adds transactions to the mempool.
@@ -33,7 +43,13 @@ If anything changes in the header, it will affect the hash. Since each block als
 (3) Stringify the block object using JSON.stringify
     Take the SHA256 hash of the stringified block object
     Set the resulting value to a hash property on the mined block just before mining it
+
+(4) Inside the mine function, pull transactions off the mempool and include them in the block in an array called transactions
+    Remove each transaction you include in the block from the mempool
+    Add the transactions array to the block before hashing the block
 */
+
+// ==================================================================================================================================================
 
 const SHA256 = require('crypto-js/sha256');
 const TARGET_DIFFICULTY =
@@ -50,8 +66,13 @@ function addTransaction(transaction) {
 
 function mine() {
   // TODO: mine a block
+  let transactions = [];
+  while (transactions.length < MAX_TRANSACTIONS && mempool.length > 0) {
+    transactions.push(mempool.pop());
+  }
   const block = {
     id: blocks.length,
+    transactions,
   };
   const hash = SHA256(JSON.stringify(block));
   blocks.push({ ...block, hash });

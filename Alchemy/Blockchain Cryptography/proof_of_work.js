@@ -11,8 +11,17 @@ Then they'll add them to the block and attempt to find the proof of work.
 
 Mining Blocks
 -------------
+
 In Bitcoin, blocks contain quite a bit of information in their header:
     the software version, a timestamp, the merkle root of its transactions, the previous block hash, and the difficulty.
+
+
+Block Hash
+----------
+
+Typically, all the information in the header of the block is hashed together to create a unique hash based on those properties.
+
+If anything changes in the header, it will affect the hash. Since each block also contains the hash of the block before it, it will affect every future block as well.
 
 
 (1) Implement the addTransaction function, which adds transactions to the mempool.
@@ -20,6 +29,10 @@ In Bitcoin, blocks contain quite a bit of information in their header:
 
 (2) Update the mine() fuction to create a new block with a unique identifier and add it to our blocks array.
     Our block will be an object with a single property: an id that is equal to the block height prior to it being mined.
+
+(3) Stringify the block object using JSON.stringify
+    Take the SHA256 hash of the stringified block object
+    Set the resulting value to a hash property on the mined block just before mining it
 */
 
 const SHA256 = require('crypto-js/sha256');

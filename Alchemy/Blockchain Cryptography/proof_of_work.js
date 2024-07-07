@@ -9,9 +9,17 @@ Typically, the miner will take all the transactions with the highest transaction
 Then they'll add them to the block and attempt to find the proof of work.
 
 
+Mining Blocks
+-------------
+In Bitcoin, blocks contain quite a bit of information in their header:
+    the software version, a timestamp, the merkle root of its transactions, the previous block hash, and the difficulty.
+
 
 (1) Implement the addTransaction function, which adds transactions to the mempool.
     Take the transaction sent to the function and push it on top of the mempool array.
+
+(2) Update the mine() fuction to create a new block with a unique identifier and add it to our blocks array.
+    Our block will be an object with a single property: an id that is equal to the block height prior to it being mined.
 */
 
 const SHA256 = require('crypto-js/sha256');

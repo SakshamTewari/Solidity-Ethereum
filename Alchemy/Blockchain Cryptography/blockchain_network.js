@@ -89,3 +89,30 @@ class Block {
 }
 
 module.exports = Block;
+
+/*
+
+Genesis Block
+-------------
+
+The genesis block is the first block in the chain, where it all kicks off!
+Every block after the genesis block links back to the first one, but the genesis block has no previous block!
+
+The Blockchain.js file contains the Blockchain class with a chain array. Let's add the Genesis Block to this array.
+
+Create a new Block in the Blockchain constructor then add it to the chain array.
+*/
+
+const Block = require('./Block');
+
+class Blockchain {
+  constructor() {
+    const block = new Block();
+    this.chain = [block];
+    [
+      /* TODO: Create the genesis block here */
+    ];
+  }
+}
+
+module.exports = Blockchain;

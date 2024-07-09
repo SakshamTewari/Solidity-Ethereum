@@ -116,3 +116,37 @@ class Blockchain {
 }
 
 module.exports = Blockchain;
+
+/*
+
+addBlock function on our Blockchain class.
+-----------------
+
+This function should take in a new block and add it to the chain array:
+
+
+const blockchain = new Blockchain();
+const block = new Block("Charlie sent Dave 2 BTC");
+
+blockchain.addBlock(block);
+
+console.log(blockchain.chain.length); // 2
+*/
+
+const Block = require('./Block');
+
+class Blockchain {
+  constructor() {
+    const block = new Block();
+    this.chain = [block];
+    [
+      /* TODO: Create the genesis block here */
+    ];
+  }
+
+  addBlock(block) {
+    return this.chain.push(block);
+  }
+}
+
+module.exports = Blockchain;

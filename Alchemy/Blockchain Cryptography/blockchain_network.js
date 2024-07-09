@@ -150,3 +150,48 @@ class Blockchain {
 }
 
 module.exports = Blockchain;
+
+/*
+Linking The Blocks
+------------------
+
+Add a previousHash property to each block. The value of this property should be the hash of the block before it in the chain.
+Use this previousHash property in the calculation of the block's hash.
+
+A good spot to add the previousHash property on the block would be in the addBlock function, where a block is placed on the chain.
+So far, the Block class in your Block.js file does not yet contain a previousHash property and currently only hashes this.data of a block - you must also include the block's this.previousHash property in the toHash function!
+You can add multiple inputs to the SHA256 function by using the + operator, for example:
+const hash = SHA256("dog" + "cat"); // hash of dog and cat together
+
+*/
+
+const SHA256 = require('crypto-js/sha256');
+
+class Block {
+  constructor(data) {
+    this.data = data;
+  }
+  toHash() {
+    return SHA256(this.data + this.previousHash); // a hash!
+  }
+}
+
+module.exports = Block;
+
+const Block = require('./Block');
+
+class Blockchain {
+  constructor() {
+    this.chain = [new Block()];
+    [
+      /* TODO: Create the genesis block here */
+    ];
+  }
+
+  addBlock(block) {
+    block.previousHash = this.chain[this.chain.length - 1].toHash();
+    return this.chain.push(block);
+  }
+}
+
+module.exports = Blockchain;

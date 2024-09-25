@@ -16,4 +16,13 @@ contract Assembly {
             jumpi(loop, lt(i, 10))
         }
     }
+
+    function nativeConditional(uint _v) public returns (uint) {
+        if (5 == _v) {
+            return 55;
+        } else if (6 == _v) {
+            return 66;
+        }
+        return 11;
+    }
 }

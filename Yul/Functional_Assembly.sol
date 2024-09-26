@@ -40,4 +40,15 @@ contract Assembly {
             }
         }
     }
+
+    // to return in assembly, we need to allocate a pointer to a memory and then return it
+
+    function asmReturns(uint _v) public returns (uint){
+        assembly {
+            let _ptr := add(mszie(), 1)
+            mstore(_ptr, _v)
+            // hexadecimal of 32 bytes is 0x20
+            return (_ptr, 0x20) // return pointer and denote how much memory to return
+        }
+    }
 }
